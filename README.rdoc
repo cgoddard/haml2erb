@@ -2,7 +2,7 @@
 
 haml2erb is a tool for converting {Haml markup}[http://haml-lang.com/] to Erb markup.
 
-<b>Latest version:</b> 0.1.0
+<b>Latest version:</b> 0.2.0
 
 * API documentation (coming soon)
 * {Source code} [http://github.com/cgoddard/haml2erb/]
@@ -25,11 +25,18 @@ markup translated into erb.
   Haml2Erb.convert('.foo')
   # => "<div class='foo'>\n</div>\n"
 
+=== Not supported yet
+
+Parsing of tag internal string interpolations, such as:
+#my_div{ class: "box #{extra_classes}" }
+
+Coming soon though ...
+
 == Licenses
 
 ==== haml2erb code and documentation (MIT license)
 
-  Copyright (c) 2009 Chris Goddard
+  Copyright (c) 2010 Chris Goddard
   
   Permission is hereby granted, free of charge, to any person obtaining
   a copy of this software and associated documentation files (the

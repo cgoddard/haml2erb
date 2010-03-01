@@ -1,5 +1,7 @@
 require 'haml2erb/lexer'
 require 'haml2erb/tokens'
+require 'haml2erb/mixins/comerging'
+require 'mixology'
 
 module Haml2Erb
   class HamlParser
@@ -15,7 +17,7 @@ module Haml2Erb
       # process incoming text one line at a time
       unprocessed.each_line do |line|
         @line_number += 1
-        options = { }
+        options = { }.mixin Haml2Erb::Mixins::CoMerging
         @lexer.load_input(line)
 
         # handle indent
@@ -26,7 +28,7 @@ module Haml2Erb
 
         # handle initial tag attributes
         while(@lexer.peek(Haml2Erb::Tokens::InitialAttribute))
-          options.merge!(@lexer.pop(Haml2Erb::Tokens::InitialAttribute).options)
+          options.comerge!(@lexer.pop(Haml2Erb::Tokens::InitialAttribute).options)
         end
         options[:element_type] = :div if((options[:element_id] || options[:element_class]) && !options[:element_type])
 
@@ -61,7 +63,7 @@ module Haml2Erb
         writer << options
       end
     rescue => error
-      raise ParsingError, "Haml2Erb had trouble parsing line #{@line_number} with input '#{@lexer.input}' remaining: #{error.to_s}"
+      raise ParsingError, "Haml2Erb had trouble parsing line #{@line_number} with input '#{@lexer.input}' remaining: #{error.to_s}", error.backtrace
     end
   end
 end

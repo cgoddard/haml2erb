@@ -14,7 +14,7 @@ module Haml2Erb
       @processed << ("  " * line_options[:indent]) if line_options[:indent]
       @processed << "<#{line_options[:element_type].to_s}" if line_options[:element_type]
       @processed << " id='#{line_options[:element_id].to_s}'" if line_options[:element_id]
-      @processed << " class='#{line_options[:element_class].to_s}'" if line_options[:element_class]
+      @processed << " class='#{[*line_options[:element_class]].join(' ')}'" if line_options[:element_class]
       line_options[:element_attributes] && line_options[:element_attributes].keys.each do |attribute_key|
         @processed << " #{attribute_key}='#{line_options[:element_attributes][attribute_key]}'"
       end
